@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: site-head">
+  <title>Editor Listing</title>
+</head>
+
+<body>
+
+<header th:replace="layout :: site-header" />
+
+<h1>Adding Editor <a th:href="@{/users/get_editor_listing}">Back</a></h1>
+
+<form th:action="@{/users/add_editor}" method="post" th:object="${user}">
+  <div><label for="username">Username:</label></div>
+  <input id="username" type="text" name="username" th:value="*{username}" />
+  <span class="formError" th:if="${#fields.hasErrors('username')}"
+                                th:errors="*{username}">Invalid username</span>
+
+  <div><label for="password" th:value="*{password}">Password:</label></div>
+  <input id="password" type="password" name="password" th:value="*{password}" />
+  <span class="formError" th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}">Invalid password</span>
+
+  <div><label for="fullName" th:value="*{fullName}">Full Name:</label></div>
+  <input id="fullName" type="text" name="fullName" th:value="*{fullName}" />
+  <span class="formError" th:if="${#fields.hasErrors('fullName')}"
+                                th:errors="*{fullName}">Invalid Full Name</span>
+
+  <div><input type="submit" value="Create"/></div>
+</form>
+<footer th:replace="layout :: site-footer" />
+
+</body>
+
+</html>

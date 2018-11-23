@@ -1,0 +1,137 @@
+logging:
+  level:
+    root: ERROR
+    org.springframework: ERROR
+    com.mitsubishimotors.mason.microservice: ERROR
+
+server:
+  port: 8082
+  servlet:
+    contextPath: /
+    
+management:
+  server:
+    port: 9001
+    address: 127.0.0.1
+    
+spring:
+  application:
+    name: java_blog_exercise
+  profiles:
+    active: local
+  thymeleaf:
+    cache: false
+  flyway:
+    enabled: true
+    schemas: java_blog_exercise
+    out-of-order: true
+  hateoas:
+    use-hal-as-default-json-media-type: true
+  http:
+    converters:
+      preferred-json-mapper: jackson 
+  mvc:
+    pathmatch:
+      use-registered-suffix-pattern: true
+    contentnegotiation:
+      favor-parameter: true
+      favor-path-extension: true
+      parameter-name: format
+      media-types:
+        xml: application/xml
+        json: application/json
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+      WRITE_DATES_AS_TIMESTAMPS: true
+      WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS: false
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+  queue:
+   endpoint: http://localhost:1234
+   requestqueue: java_blog_exercise-request
+   responsequeue: java_blog_exercise-response
+   accesskey: java_blog_exercise
+   secretkey: java_blog_exercise
+   enabled: false
+  
+    
+  
+---
+
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mmc
+    username: mmc
+    password: mmc
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        default-schema: java_blog_exercise
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+  flyway:
+    locations:
+    - classpath:db/migration/local
+logging:
+  level:
+    root: ERROR
+    org.springframework: INFO
+    com.mitsubishimotors.mason.microservice: DEBUG
+ 
+---
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:/testDb
+    username: mmc
+    password: mmc
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        default-schema: java_blog_exercise
+  main:
+    web-application-type: NONE
+  h2:
+    console:
+      enabled: false
+      settings:
+        trace: false
+        web-allow-others: false
+  queue:
+   endpoint: http://localhost:1234
+   requestqueue: java_blog_exercise-request
+   responsequeue: java_blog_exercise-response
+   accesskey: java_blog_exercise
+   secretkey: java_blog_exercise
+   enabled: true
+  flyway:
+    locations:
+    - classpath:db/migration/local
+logging:
+  level:
+    root: INFO
+    org.springframework: ERROR
+    com.mitsubishimotors.mason.microservice: INFO
+
+     

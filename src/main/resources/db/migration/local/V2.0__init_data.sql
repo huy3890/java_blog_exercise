@@ -1,0 +1,1 @@
+insert into convertium_assignment.users VALUES (1, 'huy.pham', '123456', 'Pham Duc Huy', NOW());

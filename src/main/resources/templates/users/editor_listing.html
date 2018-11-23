@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: site-head">
+  <title>Editor Listing</title>
+</head>
+
+<body>
+
+<header th:replace="layout :: site-header" />
+
+<h1>Editor Listing <a th:href="@{/users/add_editor}">Add Editor</a></h1>
+<table>
+	<tr>
+		<td>id</td>
+		<td>Username</td>
+		<td>Password</td>
+		<td>Full Name</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr th:each="user : ${users}">
+		<td th:text="${user.id}"></td>
+		<td th:text="${user.username}"></td>
+		<td th:text="${user.password}"></td>
+		<td th:text="${user.fullName}"></td>
+		<td><a th:href="@{'/users/edit/' + ${user.id}}">edit</a></td>
+		<td><a th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
+	</tr>
+</table>
+<footer th:replace="layout :: site-footer" />
+
+</body>
+
+</html>
