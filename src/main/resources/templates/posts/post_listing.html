@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: site-head">
+    <title th:text="${post.title}">View Post</title>
+</head>
+
+<body>
+
+<header th:replace="layout :: site-header" />
+
+<h1>Post Listing</h1>
+<table>
+	<tr>
+		<td>id</td>
+		<td>Title</td>
+		<td>Body</td>
+		<td>Image</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr th:each="post : ${posts}">
+		<td th:text="${post.id}"></td>
+		<td th:text="${post.title}"></td>
+		<td th:text="${post.body}"></td>
+		<td><img th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></td>
+		<td><a th:href="@{'/users/edit/' + ${post.id}}">edit</a></td>
+		<td><a th:href="@{'/users/delete/' + ${post.id}}">delete</a></td>
+	</tr>
+</table>
+
+<footer th:replace="layout :: site-footer" />
+
+</body>
+
+</html>

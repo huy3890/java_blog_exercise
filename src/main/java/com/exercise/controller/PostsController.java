@@ -1,6 +1,8 @@
 package com.exercise.controller;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.exercise.model.Post;
+import com.exercise.model.User;
 import com.exercise.services.NotificationService;
 import com.exercise.services.PostService;
+import com.exercise.services.UserService;
 import com.exercise.util.Constants;
 import com.exercise.util.ImageHelper;
 
@@ -27,6 +31,9 @@ public class PostsController {
 
   @Autowired
   private NotificationService notifyService;
+
+  @Autowired
+  private UserService userService;
 
   private static final Logger logger = LoggerFactory.getLogger(PostsController.class);
 
@@ -53,6 +60,8 @@ public class PostsController {
       notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
       return Constants.URL_POST_CREATE;
     }
+    User user = userService.findById(1L).get();
+    post.setAuthor(user);
     if (!file.isEmpty()) {
       try {
         byte[] bytes = file.getBytes();
@@ -60,13 +69,20 @@ public class PostsController {
           notifyService.addErrorMessage(Constants.IMAGE_ERROR_MESSAGE);
           return Constants.URL_POST_CREATE;
         }
-        post.setBannerImage(bytes);
+        post.setBannerImage(Base64.getEncoder().encode(bytes));
       } catch (IOException e) {
         logger.info("Cannot read file: {}", PostsController.class.toString());
       }
     }
     postService.create(post);
     return "redirect:" + Constants.URL_POST_LIST;
+  }
+
+  @RequestMapping(value = Constants.URL_POST_LIST)
+  public String getListEditor(Model model) {
+    List<Post> postList = postService.findAll();
+    model.addAttribute("posts", postList);
+    return Constants.RESOURCE_POST_LIST;
   }
 
 

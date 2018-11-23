@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users", schema = "`convertium_assignment`")
+@Table(name = "users", schema = "`java_blog_exercise`")
 public class User {
 
   @Id

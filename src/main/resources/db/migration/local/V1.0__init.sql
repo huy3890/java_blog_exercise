@@ -3,9 +3,9 @@
 
 -- Convertium Assignment Schema Starts Here
 
-CREATE SCHEMA IF NOT EXISTS "convertium_assignment";
+CREATE SCHEMA IF NOT EXISTS "java_blog_exercise";
 
-SET search_path TO "convertium_assignment";
+SET search_path TO "java_blog_exercise";
 
 CREATE TABLE USERS (
   id serial NOT NULL,
