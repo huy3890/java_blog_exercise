@@ -37,7 +37,7 @@ CREATE TABLE POST (
   id serial NOT NULL,
   user_id int4 NOT NULL,
   title varchar(255) NOT NULL,
-  image bytea,
+  image varchar,
   body varchar(255) NOT NULL,
   status varchar(255),
   last_modified TIMESTAMP NOT NULL,

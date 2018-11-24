@@ -3,6 +3,7 @@ package com.exercise.services;
 import java.util.List;
 import java.util.Optional;
 import com.exercise.model.Post;
+import com.exercise.req.PostRequest;
 
 
 public interface PostService {
@@ -17,4 +18,6 @@ public interface PostService {
   Post edit(Post post);
 
   void deleteById(Long id);
+
+  List<Post> findAllToPublish(PostRequest postRequest);
 }

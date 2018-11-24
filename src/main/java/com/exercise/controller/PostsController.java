@@ -1,7 +1,6 @@
 package com.exercise.controller;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -21,6 +20,7 @@ import com.exercise.services.NotificationService;
 import com.exercise.services.PostService;
 import com.exercise.services.UserService;
 import com.exercise.util.Constants;
+import com.exercise.util.DateHelper;
 import com.exercise.util.ImageHelper;
 
 @Controller
@@ -37,15 +37,53 @@ public class PostsController {
 
   private static final Logger logger = LoggerFactory.getLogger(PostsController.class);
 
-  @RequestMapping("/posts/view/{id}")
+  @RequestMapping(Constants.URL_POST_VIEW)
   public String view(@PathVariable("id") Long id, Model model) {
     Post post = postService.findById(id).get();
     if (post == null) {
       notifyService.addErrorMessage("Cannot find post #" + id);
-      return "redirect:/";
+      return "redirect:" + Constants.URL_POST_LIST;
     }
     model.addAttribute("post", post);
-    return "posts/view";
+    return Constants.RESOURCE_POST_VIEW;
+  }
+
+  @RequestMapping(Constants.URL_POST_GET_ARPPOVAL)
+  public String getApproval(@PathVariable("id") Long id, Model model) {
+    Post post = postService.findById(id).get();
+    if (post == null) {
+      notifyService.addErrorMessage("Cannot find post #" + id);
+      return "redirect:" + Constants.URL_POST_LIST;
+    }
+    post.setStatus(Constants.POST_STATUS_READY_TO_PUBLISH);
+    postService.edit(post);
+    return "redirect:" + Constants.URL_POST_VIEW;
+  }
+
+  @RequestMapping(Constants.URL_POST_REJECT)
+  public String rejectPost(@PathVariable("id") Long id, Model model) {
+    Post post = postService.findById(id).get();
+    if (post == null) {
+      notifyService.addErrorMessage("Cannot find post #" + id);
+      return "redirect:" + Constants.URL_POST_LIST;
+    }
+    post.setStatus(Constants.POST_STATUS_REJECT);
+    postService.edit(post);
+    return "redirect:" + Constants.URL_POST_VIEW;
+  }
+
+  @RequestMapping(Constants.URL_POST_PUSHLISH)
+  public String publishPost(@PathVariable("id") Long id,
+      @PathVariable("publishDate") String publishDate, Model model) {
+    Post post = postService.findById(id).get();
+    if (post == null) {
+      notifyService.addErrorMessage("Cannot find post #" + id);
+      return "redirect:" + Constants.URL_POST_LIST;
+    }
+    post.setPublishDate(DateHelper.convertDateFromUnixTime(publishDate));
+    post.setStatus(Constants.POST_STATUS_PUBLISHED);
+    postService.edit(post);
+    return "redirect:" + Constants.URL_POST_VIEW;
   }
 
   @RequestMapping(Constants.URL_POST_CREATE)
@@ -69,7 +107,8 @@ public class PostsController {
           notifyService.addErrorMessage(Constants.IMAGE_ERROR_MESSAGE);
           return Constants.URL_POST_CREATE;
         }
-        post.setBannerImage(Base64.getEncoder().encode(bytes));
+        // post.setBannerImage(Base64.getEncoder().encode(bytes));
+        post.setBannerImage(org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(bytes));
       } catch (IOException e) {
         logger.info("Cannot read file: {}", PostsController.class.toString());
       }

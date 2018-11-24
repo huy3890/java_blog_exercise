@@ -9,21 +9,51 @@
 
 <header th:replace="layout :: site-header" />
 
-<main id="posts">
-  <article>
-    <h2 class="title" th:text="${post.title}">Post Title</h2>
-    <div class="date">
-    <i>Posted on</i>
-    <span th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}">22-May-2016</span>
-        <span th:if="${post.author}" th:remove="tag">
-        <i>by</i>
-        <span th:text="${post.author.fullName != null ?
-                         post.author.fullName : post.author.username}">Svetlin Nakov</span>
-        </span>
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="row">
+        <div class='col-sm-6'>
+          <h1><strong>PREVIEW POST</strong></h1>
+        </div>
+        <div class='col-sm-6'>
+          <h3><a th:href="@{/posts/get_post_listing}">Back &nbsp;</a>
+	      <a th:if="${post.status != 'Ready to publish'}" th:href="@{'/posts/get_approval/' + ${post.id}}">Get Approval &nbsp;</a>
+	      <a th:if="${post.status != 'Reject'}" th:href="@{'/posts/reject/' + ${post.id}}">Reject &nbsp;</a>
+	      <a id="publishPostLink" th:if="${post.status != 'Published'}" th:href="@{'/posts/publish/' + ${post.id}}">Publish &nbsp;</a>
+	      </h3>
+	      <div class="form-group">
+              <div class='input-group date' id='datetimepicker1'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+          </div>
+          <!-- <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+          </script> -->
+        </div>
+      </div>
     </div>
-    <p class="content" th:utext="${post.body}">Post content</p>
-  </article>
-</main>
+    <div class='col-sm-12'>
+      	<h2 class="title" th:text="${post.title}">Post Title</h2>
+	    <div><img th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></div>
+	    <p class="content" th:utext="${post.body}">Post content</p>
+	    <div class="date">
+		    <i>Posted on</i>
+		    <span th:text="${#dates.format(post.lastModified, 'dd-MMM-yyyy')}"></span>
+		    <span th:if="${post.author}" th:remove="tag">
+		    <i>by</i>
+		    <span th:text="${post.author.fullName != null ?
+		                     post.author.fullName : post.author.username}"></span>
+		    </span>
+	    </div>
+    </div>
+  </div>
+</div>
 
 <footer th:replace="layout :: site-footer" />
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.exercise.model.Post;
 import com.exercise.repository.PostRepository;
+import com.exercise.repository.specification.PostViewSpec;
+import com.exercise.req.PostRequest;
 import com.exercise.services.PostService;
 
 @Service
@@ -15,6 +17,9 @@ import com.exercise.services.PostService;
 public class PostServiceJpaImpl implements PostService {
   @Autowired
   private PostRepository postRepository;
+
+  @Autowired
+  private PostViewSpec<Post> postViewSpec;
 
   @Override
   public List<Post> findAll() {
@@ -45,4 +50,11 @@ public class PostServiceJpaImpl implements PostService {
   public void deleteById(Long id) {
     this.postRepository.deleteById(id);
   }
+
+  @Override
+  public List<Post> findAllToPublish(PostRequest postRequest) {
+    return this.postRepository.findAll(postViewSpec.getFilter(postRequest));
+    // return null;
+  }
+
 }

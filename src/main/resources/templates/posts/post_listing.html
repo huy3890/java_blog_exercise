@@ -16,6 +16,8 @@
 		<td>Title</td>
 		<td>Body</td>
 		<td>Image</td>
+		<td>Author</td>
+		<td>Status</td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -24,8 +26,10 @@
 		<td th:text="${post.title}"></td>
 		<td th:text="${post.body}"></td>
 		<td><img th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></td>
-		<td><a th:href="@{'/users/edit/' + ${post.id}}">edit</a></td>
-		<td><a th:href="@{'/users/delete/' + ${post.id}}">delete</a></td>
+		<td th:text="${post.author.username}"></td>
+		<td th:text="${post.status}"></td>
+		<td><a th:href="@{'/posts/view/' + ${post.id}}">Preview</a></td>
+		<td><a th:href="@{'/users/delete/' + ${post.id}}">Push</a></td>
 	</tr>
 </table>
 

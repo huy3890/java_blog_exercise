@@ -30,7 +30,7 @@ public class Post {
   private String title;
 
   @Column(name = "image")
-  private byte[] bannerImage;
+  private String bannerImage;
 
   @Size(min = 1, message = "Title size should not be empty")
   @Column(name = "body")
@@ -42,6 +42,36 @@ public class Post {
 
   @Column(name = "last_modified")
   private Date lastModified;
+
+  @Column(name = "status")
+  private String status;
+
+  @Column(name = "publish_date")
+  private Date publishDate;
+
+  public Date getPublishDate() {
+    return publishDate;
+  }
+
+  public void setPublishDate(Date publishDate) {
+    this.publishDate = publishDate;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
 
   @PrePersist
   public void addTimestamp() {
@@ -69,11 +99,11 @@ public class Post {
     this.title = title;
   }
 
-  public byte[] getBannerImage() {
+  public String getBannerImage() {
     return bannerImage;
   }
 
-  public void setBannerImage(byte[] bannerImage) {
+  public void setBannerImage(String bannerImage) {
     this.bannerImage = bannerImage;
   }
 
@@ -93,7 +123,7 @@ public class Post {
     this.author = author;
   }
 
-  public Post(Long id, String title, byte[] bannerImage, String body, User author) {
+  public Post(Long id, String title, String bannerImage, String body, User author) {
     super();
     this.id = id;
     this.title = title;
