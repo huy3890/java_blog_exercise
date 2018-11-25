@@ -51,7 +51,7 @@ public abstract class BaseSpecification<T, U> {
 
   Specification<T> byPublishDateDate(Date publishDate) {
     return (root, query, cb) -> {
-      return cb.greaterThanOrEqualTo(root.get(StringConstant.PUBLISHDATE.value()), publishDate);
+      return cb.lessThanOrEqualTo(root.get(StringConstant.PUBLISHDATE.value()), publishDate);
     };
   }
 

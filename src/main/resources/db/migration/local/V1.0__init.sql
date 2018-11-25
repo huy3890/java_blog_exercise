@@ -47,10 +47,10 @@ CREATE TABLE POST (
 
 CREATE TABLE PUBLIC_POST (
   id serial NOT NULL,
-  user_id int4 NOT NULL,
   title varchar(255) NOT NULL,
-  image varchar(255) NOT NULL,
+  image varchar,
   body varchar(255) NOT NULL,
+  author varchar(255),
   last_modified TIMESTAMP NOT NULL,
   CONSTRAINT PUBLIC_POST_pk PRIMARY KEY (id)
 );

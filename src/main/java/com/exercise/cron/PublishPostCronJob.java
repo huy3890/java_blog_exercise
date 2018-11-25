@@ -9,8 +9,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.exercise.controller.PostsController;
 import com.exercise.model.Post;
+import com.exercise.model.PublishPost;
 import com.exercise.req.PostRequest;
 import com.exercise.services.PostService;
+import com.exercise.services.PublishPostService;
 import com.exercise.util.Constants;
 
 @Component
@@ -19,6 +21,9 @@ public class PublishPostCronJob {
 
   @Autowired
   private PostService postService;
+
+  @Autowired
+  private PublishPostService publishPostService;
 
   @Scheduled(cron = "0/20 * * * * ?")
   public void scheduleTaskUsingCronExpression() {
@@ -29,6 +34,21 @@ public class PublishPostCronJob {
     request.setStatus(Constants.POST_STATUS_PUBLISHED);
     request.setPublishDate(new Date());
     List<Post> postList = postService.findAllToPublish(request);
+    for (Post post : postList) {
+      publishPostService.edit(mappingPostToPublishPost(post));
+      post.setStatus(Constants.POST_STATUS_ARCHIVED);
+      postService.edit(post);
+    }
     logger.info("Post - " + postList);
+  }
+
+  private PublishPost mappingPostToPublishPost(final Post post) {
+    PublishPost publishPost = new PublishPost();
+    publishPost.setId(post.getId());
+    publishPost.setTitle(post.getTitle());
+    publishPost.setBannerImage(post.getBannerImage());
+    publishPost.setBody(post.getBody());
+    publishPost.setAuthor(post.getAuthor().getUsername());
+    return publishPost;
   }
 }
