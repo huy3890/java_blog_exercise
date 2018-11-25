@@ -6,39 +6,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.exercise.model.PublishPost;
-import com.exercise.repository.PublishPostRepository;
-import com.exercise.services.PublishPostService;
+import com.exercise.model.PublicPost;
+import com.exercise.repository.PublicPostRepository;
+import com.exercise.services.PublicPostService;
 
 @Service
 @Transactional
-public class PublishPostServiceJpaImpl implements PublishPostService {
+public class PublicPostServiceJpaImpl implements PublicPostService {
   @Autowired
-  private PublishPostRepository publishPostRepository;
+  private PublicPostRepository publishPostRepository;
 
   @Override
-  public List<PublishPost> findAll() {
+  public List<PublicPost> findAll() {
     return this.publishPostRepository.findAll();
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public List<PublishPost> findLatestByPaging(int record) {
+  public List<PublicPost> findLatestByPaging(int record) {
     return this.publishPostRepository.findLatestPosts(new PageRequest(0, record));
   }
 
   @Override
-  public Optional<PublishPost> findById(Long id) {
+  public Optional<PublicPost> findById(Long id) {
     return this.publishPostRepository.findById(id);
   }
 
   @Override
-  public PublishPost create(PublishPost post) {
+  public PublicPost create(PublicPost post) {
     return this.publishPostRepository.save(post);
   }
 
   @Override
-  public PublishPost edit(PublishPost post) {
+  public PublicPost edit(PublicPost post) {
     return this.publishPostRepository.save(post);
   }
 

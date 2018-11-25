@@ -1,6 +1,7 @@
 package com.exercise.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.exercise.model.Post;
 import com.exercise.model.User;
+import com.exercise.req.PostRequest;
 import com.exercise.services.NotificationService;
 import com.exercise.services.PostService;
 import com.exercise.services.UserService;
@@ -119,7 +121,11 @@ public class PostsController {
 
   @RequestMapping(value = Constants.URL_POST_LIST)
   public String getListEditor(Model model) {
+    PostRequest request = new PostRequest();
+    request.setStatus(Constants.POST_STATUS_PUBLISHED);
+    request.setPublishDate(new Date());
     List<Post> postList = postService.findAll();
+    // List<Post> postList = postService.findAllToPublish(request);
     model.addAttribute("posts", postList);
     return Constants.RESOURCE_POST_LIST;
   }

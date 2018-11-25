@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.exercise.controller.PostsController;
+import com.exercise.model.LinkPost;
 import com.exercise.model.Post;
-import com.exercise.model.PublishPost;
+import com.exercise.model.PublicPost;
 import com.exercise.req.PostRequest;
+import com.exercise.services.LinkPostService;
 import com.exercise.services.PostService;
-import com.exercise.services.PublishPostService;
+import com.exercise.services.PublicPostService;
 import com.exercise.util.Constants;
 
 @Component
@@ -23,9 +25,12 @@ public class PublishPostCronJob {
   private PostService postService;
 
   @Autowired
-  private PublishPostService publishPostService;
+  private PublicPostService publicPostService;
 
-  @Scheduled(cron = "0/20 * * * * ?")
+  @Autowired
+  private LinkPostService linkPostService;
+
+  @Scheduled(cron = "0/30 * * * * ?")
   public void scheduleTaskUsingCronExpression() {
 
     long now = System.currentTimeMillis() / 1000;
@@ -35,16 +40,28 @@ public class PublishPostCronJob {
     request.setPublishDate(new Date());
     List<Post> postList = postService.findAllToPublish(request);
     for (Post post : postList) {
-      publishPostService.edit(mappingPostToPublishPost(post));
+      LinkPost linkPost = linkPostService.findByPost(post);
+      if (linkPost != null) {
+        publicPostService.edit(mappingPostToPublishPost(post, linkPost));
+      } else {
+        List<PublicPost> list = publicPostService.findAll();
+        PublicPost publishPost = publicPostService.create(mappingPostToPublishPost(post, linkPost));
+        linkPost = new LinkPost();
+        linkPost.setPost(post);
+        linkPost.setPublishPost(publishPost);
+        linkPostService.create(linkPost);
+      }
       post.setStatus(Constants.POST_STATUS_ARCHIVED);
       postService.edit(post);
     }
-    logger.info("Post - " + postList);
+    logger.info("Done - " + postList);
   }
 
-  private PublishPost mappingPostToPublishPost(final Post post) {
-    PublishPost publishPost = new PublishPost();
-    publishPost.setId(post.getId());
+  private PublicPost mappingPostToPublishPost(final Post post, LinkPost linkPost) {
+    PublicPost publishPost = new PublicPost();
+    if (linkPost != null) {
+      publishPost.setId(linkPost.getPublishPost().getId());
+    }
     publishPost.setTitle(post.getTitle());
     publishPost.setBannerImage(post.getBannerImage());
     publishPost.setBody(post.getBody());

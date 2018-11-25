@@ -36,7 +36,7 @@ public class Post {
   @Column(name = "body")
   private String body;
 
-  @ManyToOne(optional = false, fetch = FetchType.LAZY)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User author;
 
@@ -134,5 +134,11 @@ public class Post {
 
   public Post() {
     super();
+  }
+
+  @Override
+  public String toString() {
+    return "Post{" + "id=" + id + ", title='" + title + '\'' + ", bannerImage='" + bannerImage
+        + '\'' + ", body='" + body + '\'' + ", author='" + author + '\'' + '}';
   }
 }

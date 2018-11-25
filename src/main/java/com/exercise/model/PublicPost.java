@@ -15,12 +15,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "publish_post", schema = "`java_blog_exercise`")
-public class PublishPost {
+@Table(name = "public_post", schema = "`java_blog_exercise`")
+public class PublicPost {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_id_seq")
-  @SequenceGenerator(name = "post_id_seq", sequenceName = "post_id_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "public_post_id_seq")
+  @SequenceGenerator(name = "public_post_id_seq", sequenceName = "public_post_id_seq",
+      allocationSize = 1)
   private Long id;
 
   @Size(min = 1, max = 255, message = "Title size should be in the range [1...255]")
@@ -99,7 +100,7 @@ public class PublishPost {
     this.author = author;
   }
 
-  public PublishPost(Long id, String title, String bannerImage, String body, String author) {
+  public PublicPost(Long id, String title, String bannerImage, String body, String author) {
     super();
     this.id = id;
     this.title = title;
@@ -108,7 +109,7 @@ public class PublishPost {
     this.author = author;
   }
 
-  public PublishPost() {
+  public PublicPost() {
     super();
   }
 }
