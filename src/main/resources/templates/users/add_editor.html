@@ -9,26 +9,41 @@
 
 <header th:replace="layout :: site-header" />
 
-<h1>Adding Editor <a th:href="@{/users/get_editor_listing}">Back</a></h1>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-8">
+					<h1><strong>ADD NEW EDITOR</strong></h1>
+				</div>
+				<div class="col-sm-4">
+					<h1 align="right"><a th:href="@{/users/get_editor_listing}">Back</a></h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<form th:action="@{/users/add_editor}" method="post" th:object="${user}">
+			  <div><label for="username">Username:</label></div>
+			  <input class="form-control" id="username" type="text" name="username" th:value="*{username}" />
+			  <span class="formError" th:if="${#fields.hasErrors('username')}"
+			                                th:errors="*{username}">Invalid username</span>
+			
+			  <div><label for="password" th:value="*{password}">Password:</label></div>
+			  <input class="form-control" id="password" type="password" name="password" th:value="*{password}" />
+			  <span class="formError" th:if="${#fields.hasErrors('password')}"
+			                                th:errors="*{password}">Invalid password</span>
+			
+			  <div><label for="fullName" th:value="*{fullName}">Full Name:</label></div>
+			  <input class="form-control" id="fullName" type="text" name="fullName" th:value="*{fullName}" />
+			  <span class="formError" th:if="${#fields.hasErrors('fullName')}"
+			                                th:errors="*{fullName}">Invalid Full Name</span>
+			
+			  <div style="margin-top: 40px"><input class="btn btn-lg btn-primary btn-block" type="submit" value="Create"/></div>
+			</form>
+		</div>
+	</div>
+</div>
 
-<form th:action="@{/users/add_editor}" method="post" th:object="${user}">
-  <div><label for="username">Username:</label></div>
-  <input id="username" type="text" name="username" th:value="*{username}" />
-  <span class="formError" th:if="${#fields.hasErrors('username')}"
-                                th:errors="*{username}">Invalid username</span>
-
-  <div><label for="password" th:value="*{password}">Password:</label></div>
-  <input id="password" type="password" name="password" th:value="*{password}" />
-  <span class="formError" th:if="${#fields.hasErrors('password')}"
-                                th:errors="*{password}">Invalid password</span>
-
-  <div><label for="fullName" th:value="*{fullName}">Full Name:</label></div>
-  <input id="fullName" type="text" name="fullName" th:value="*{fullName}" />
-  <span class="formError" th:if="${#fields.hasErrors('fullName')}"
-                                th:errors="*{fullName}">Invalid Full Name</span>
-
-  <div><input type="submit" value="Create"/></div>
-</form>
 <footer th:replace="layout :: site-footer" />
 
 </body>

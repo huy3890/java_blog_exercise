@@ -6,8 +6,10 @@
 </head>
 <body>
 	<header th:replace="layout :: site-header"/>
-	<h1>Welcome to Spring MVC</h1>
+	<div class="container">
+	    <h1>JAVA Blog Exercise</h1>
 	    Now is: <b th:text="${execInfo.now.time}"></b>
+	</div>
 	</body>
 	<footer th:replace="layout :: site-footer"/>
 </html>

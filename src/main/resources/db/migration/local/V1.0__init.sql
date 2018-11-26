@@ -18,8 +18,7 @@ CREATE TABLE USERS (
 
 CREATE TABLE ROLES (
   id serial NOT NULL,
-  action_id int4 NOT NULL,
-  action_role varchar(255) NOT NULL,
+  role varchar(255) NOT NULL,
   last_modified TIMESTAMP NOT NULL,
   CONSTRAINT ROLE_pk PRIMARY KEY (id)
 );
@@ -77,3 +76,4 @@ create sequence if not exists user_id_seq;
 create sequence if not exists post_id_seq;
 create sequence if not exists public_post_id_seq;
 create sequence if not exists link_post_id_seq;
+create sequence if not exists roles_id_seq

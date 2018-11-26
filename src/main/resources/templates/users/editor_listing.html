@@ -9,25 +9,41 @@
 
 <header th:replace="layout :: site-header" />
 
-<h1>Editor Listing <a th:href="@{/users/add_editor}">Add Editor</a></h1>
-<table>
-	<tr>
-		<td>id</td>
-		<td>Username</td>
-		<td>Password</td>
-		<td>Full Name</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr th:each="user : ${users}">
-		<td th:text="${user.id}"></td>
-		<td th:text="${user.username}"></td>
-		<td th:text="${user.password}"></td>
-		<td th:text="${user.fullName}"></td>
-		<td><a th:href="@{'/users/edit/' + ${user.id}}">edit</a></td>
-		<td><a th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
-	</tr>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-sm-8">
+					<h1><strong>EDITOR LISTING</strong></h1>
+				</div>
+				<div class="col-sm-4">
+					<h1 align="right"><a th:href="@{/users/add_editor}">Add Editor</a></h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<table class="table table-striped">
+				<tr>
+					<td>id</td>
+					<td>Username</td>
+					<td>Password</td>
+					<td>Full Name</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.username}"></td>
+					<td th:text="${user.password}"></td>
+					<td th:text="${user.fullName}"></td>
+					<td><a th:href="@{'/users/edit/' + ${user.id}}">edit</a></td>
+					<td><a th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
 <footer th:replace="layout :: site-footer" />
 
 </body>

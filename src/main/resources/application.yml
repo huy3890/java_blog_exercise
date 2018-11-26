@@ -55,6 +55,9 @@ spring:
    accesskey: java_blog_exercise
    secretkey: java_blog_exercise
    enabled: false
+  queries:
+    users-query: select user_name, pass_word from java_blog_exercise.users where user_name='huy.pham'
+    roles-query: select u.user_name, r.role from user u inner join user_role ur on(u.user_id=ur.user_id) inner join roles r on(ur.role_id=r.role_id) where u.user_name=?    
   
     
   

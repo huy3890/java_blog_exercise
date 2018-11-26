@@ -10,6 +10,7 @@ public class Constants {
   public static final String URL_USER_ADD = "/users/add_editor";
   public static final String URL_USER_LIST = "/users/get_editor_listing";
   public static final String URL_USER_LOGIN = "/users/login";
+  public static final String URL_USER_LOGOUT = "/users/logout";
   public static final String URL_USER_EDIT = "/users/edit/{id}";
   public static final String URL_USER_UPDATE = "/users/update_editor/{id}";
   public static final String URL_USER_DELETE = "/users/delete/{id}";

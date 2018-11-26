@@ -3,6 +3,8 @@ package com.exercise.services.impl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.exercise.model.User;
@@ -21,6 +23,11 @@ public class UserServiceJpaImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
 
+  public PasswordEncoder passwordEncoder() {
+    PasswordEncoder encoder = new BCryptPasswordEncoder();
+    return encoder;
+  }
+
   @Override
   public List<User> findAll() {
     return this.userRepository.findAll();
@@ -33,6 +40,10 @@ public class UserServiceJpaImpl implements UserService {
 
   @Override
   public User create(User user) {
+    if (user == null) {
+      return null;
+    }
+    user.setPassword(passwordEncoder().encode(user.getPassword()));
     return this.userRepository.save(user);
   }
 
@@ -44,6 +55,11 @@ public class UserServiceJpaImpl implements UserService {
   @Override
   public void deleteById(Long id) {
     this.userRepository.deleteById(id);
+  }
+
+  @Override
+  public User findByUsername(String userName) {
+    return this.userRepository.findByUsername(userName);
   }
 
 }

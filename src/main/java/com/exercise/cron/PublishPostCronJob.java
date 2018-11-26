@@ -30,7 +30,8 @@ public class PublishPostCronJob {
   @Autowired
   private LinkPostService linkPostService;
 
-  @Scheduled(cron = "0/30 * * * * ?")
+  // @Scheduled(cron = "0/50 * * * * ?")
+  @Scheduled(cron = "* 10 * * * ?")
   public void scheduleTaskUsingCronExpression() {
 
     long now = System.currentTimeMillis() / 1000;
@@ -44,7 +45,6 @@ public class PublishPostCronJob {
       if (linkPost != null) {
         publicPostService.edit(mappingPostToPublishPost(post, linkPost));
       } else {
-        List<PublicPost> list = publicPostService.findAll();
         PublicPost publishPost = publicPostService.create(mappingPostToPublishPost(post, linkPost));
         linkPost = new LinkPost();
         linkPost.setPost(post);

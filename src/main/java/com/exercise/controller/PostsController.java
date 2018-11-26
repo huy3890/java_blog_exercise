@@ -115,6 +115,7 @@ public class PostsController {
         logger.info("Cannot read file: {}", PostsController.class.toString());
       }
     }
+    post.setStatus(Constants.POST_STATUS_DRAFT);
     postService.create(post);
     return "redirect:" + Constants.URL_POST_LIST;
   }
