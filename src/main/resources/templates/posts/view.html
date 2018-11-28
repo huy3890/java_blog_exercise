@@ -16,13 +16,14 @@
         <div class='col-sm-6'>
           <h1><strong>PREVIEW POST</strong></h1>
         </div>
-        <div class='col-sm-6'>
-          <h3><a th:href="@{/posts/get_post_listing}">Back &nbsp;</a>
-	      <a th:if="${post.status != 'Ready to publish'}" th:href="@{'/posts/get_approval/' + ${post.id}}">Get Approval &nbsp;</a>
-	      <a th:if="${post.status != 'Reject'}" th:href="@{'/posts/reject/' + ${post.id}}">Reject &nbsp;</a>
-	      <a id="publishPostLink" th:if="${post.status != 'Published'}" th:href="@{'/posts/publish/' + ${post.id}}">Publish &nbsp;</a>
-	      </h3>
-	      <div class="form-group">
+        <div align="right" class='col-sm-6'>
+          <h1>
+		      <a th:if="${post.status != 'Ready to publish'}" th:href="@{'/posts/get_approval/' + ${post.id}}">Get Approval &nbsp;</a>
+		      <a sec:authorize="hasAuthority('ADMIN')" th:if="${post.status != 'Reject'}" th:href="@{'/posts/reject/' + ${post.id}}">Reject &nbsp;</a>
+		      <a sec:authorize="hasAuthority('ADMIN')" id="publishPostLink" th:if="${post.status != 'Published'}" th:href="@{'/posts/publish/' + ${post.id}}">Publish &nbsp;</a>
+		      <a th:href="@{/posts/get_post_listing}">Back</a>
+	      </h1>
+	      <div sec:authorize="hasAuthority('ADMIN')" class="form-group">
               <div class='input-group date' id='datetimepicker1'>
                   <input type='text' class="form-control" />
                   <span class="input-group-addon">
@@ -38,11 +39,12 @@
         </div>
       </div>
     </div>
+    <hr>
     <div class='col-sm-12'>
-      	<h2 class="title" th:text="${post.title}">Post Title</h2>
-	    <div><img th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></div>
-	    <p class="content" th:utext="${post.body}">Post content</p>
-	    <div class="date">
+      	<h2 class="title">Post Title: <span th:text="${post.title}"></span></h2>
+	    <div><img style="width:100%; max-width:900px;" th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></div>
+	    <p class="content">Post content: <span th:utext="${post.body}"></span></p>
+	    <div align="right" class="date">
 		    <i>Posted on</i>
 		    <span th:text="${#dates.format(post.lastModified, 'dd-MMM-yyyy')}"></span>
 		    <span th:if="${post.author}" th:remove="tag">

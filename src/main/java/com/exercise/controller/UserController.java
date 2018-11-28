@@ -1,5 +1,6 @@
 package com.exercise.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import com.exercise.req.LoginForm;
 import com.exercise.services.NotificationService;
 import com.exercise.services.UserService;
 import com.exercise.util.Constants;
+import com.exercise.util.StringConstant;
 
 @Controller
 public class UserController {
@@ -70,7 +72,7 @@ public class UserController {
       notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
       return Constants.RESOURCE_USER_ADD;
     }
-    userService.create(user);
+    userService.create(user, Arrays.asList(StringConstant.EDITOR.value()));
     return "redirect:" + Constants.URL_USER_LIST;
   }
 

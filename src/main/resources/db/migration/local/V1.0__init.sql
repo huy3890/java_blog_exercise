@@ -27,7 +27,7 @@ CREATE TABLE USER_ROLE (
   id serial NOT NULL,
   user_id int4 NOT NULL,
   role_id int4 NOT NULL,
-  last_modified TIMESTAMP NOT NULL,
+  last_modified TIMESTAMP,
   CONSTRAINT USER_ROLE_pk PRIMARY KEY (id)
 );
 

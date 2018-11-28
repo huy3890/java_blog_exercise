@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="site-head">
     <meta charset="UTF-8" />
@@ -7,10 +8,13 @@
 	<link rel="stylesheet" href="../public/css/bootstrap-datetimepicker.min.css" th:href="@{/css/bootstrap-datetimepicker.min.css}" />
 	<link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
 	<link rel="icon" href="../public/img/favicon.ico" th:href="@{/img/favicon.ico}" />
+	<link rel="stylesheet" href="../public/css/froala_editor.min.css" th:href="@{/css/froala_editor.min.css}" />
+	<link rel="stylesheet" href="../public/css/froala_style.min.css" th:href="@{/css/froala_style.min.css}" />
 	<script src="../public/js/jquery-3.1.0.min.js" th:src="@{/js/jquery-3.1.0.min.js}"></script>
 	<script src="../public/js/moment.js" th:src="@{/js/moment.js}"></script>
 	<script src="../public/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 	<script src="../public/js/bootstrap-datetimepicker.min.js" th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+	<script src="../public/js/froala_editor.min.js" th:src="@{/js/froala_editor.min.js}"></script>
 	<script src="../public/js/blog-scripts.js" th:src="@{/js/blog-scripts.js}"></script>
     <title>Blog</title>
 </head>
@@ -23,15 +27,18 @@
 	      <a href="index.html" th:href="@{/}">Home</a>
 	      <!-- <a href="users/login.html" th:href="@{/users/login}">Login</a> -->
 	      <!-- <a href="users/register.html" th:href="@{/users/register}">Register</a> -->
+	      <a sec:authorize="isAnonymous()" th:href="@{/users/login}">Login</a>
+	      <span sec:authorize="isAuthenticated()">
 	      <a href="posts/post_lis.html" th:href="@{/posts/get_post_listing}">Posts</a>
 	      <a href="posts/post_create.html" th:href="@{/posts/post_create}">Create Post</a>
-	      <a href="users/index.html" th:href="@{/users/get_editor_listing}">Editor Listing</a>
+	      <a sec:authorize="hasAuthority('ADMIN')" href="users/index.html" th:href="@{/users/get_editor_listing}">Editor Listing</a>
 	      <div id="logged-in-info">
-	          <span>Hello, <b>(user)</b></span>
+	          <span> Hello <strong><span sec:authentication="name"></span></strong> Roles: <span sec:authentication="principal.authorities"></span></span><!-- |Hello, <b>[[${#httpServletRequest.remoteUser}]]</b> -->
 	          <form method="post" th:action="@{/users/logout}">
 	              <input type="submit" value="Logout"/>
 	          </form>
 	      </div>
+	      </span>
 	    </header>
 
         <h1 th:text="${session.siteNotificationMessages}" th:unless="${session == null}">[...]</h1>

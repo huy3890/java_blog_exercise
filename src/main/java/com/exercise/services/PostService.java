@@ -3,11 +3,14 @@ package com.exercise.services;
 import java.util.List;
 import java.util.Optional;
 import com.exercise.model.Post;
+import com.exercise.model.User;
 import com.exercise.req.PostRequest;
 
 
 public interface PostService {
   List<Post> findAll();
+
+  List<Post> findByAuthor(final User user);
 
   List<Post> findLatestByPaging(int record);
 

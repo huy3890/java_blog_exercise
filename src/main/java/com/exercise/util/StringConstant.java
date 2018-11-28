@@ -2,7 +2,12 @@ package com.exercise.util;
 
 public enum StringConstant {
 
-  LASTMODIFIED("lastModified"), STATUS("status"), PUBLISHDATE("publishDate");
+  ADMIN("ADMIN"), 
+  EDITOR("EDITOR"),
+  LASTMODIFIED("lastModified"), 
+  STATUS("status"), 
+  PUBLISHDATE("publishDate");
+  
   private String value;
 
   StringConstant(String value) {

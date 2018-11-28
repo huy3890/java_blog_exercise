@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.exercise.model.Post;
+import com.exercise.model.User;
 import com.exercise.repository.PostRepository;
 import com.exercise.repository.specification.PostViewSpec;
 import com.exercise.req.PostRequest;
@@ -55,6 +56,11 @@ public class PostServiceJpaImpl implements PostService {
   public List<Post> findAllToPublish(PostRequest postRequest) {
     return this.postRepository.findAll(postViewSpec.getFilter(postRequest));
     // return null;
+  }
+
+  @Override
+  public List<Post> findByAuthor(User user) {
+    return this.postRepository.findByAuthor(user);
   }
 
 }

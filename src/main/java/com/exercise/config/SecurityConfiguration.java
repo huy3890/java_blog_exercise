@@ -18,7 +18,7 @@ import com.exercise.util.Constants;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
   
   @Autowired
@@ -58,9 +58,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     http.csrf().disable()
     .authorizeRequests()
-        .antMatchers("/", "/home", "/about", "/users/**").permitAll()
-        .antMatchers("/admin/**", "/test/**").hasAnyRole("ADMIN")
-        .antMatchers("/users123/**").hasAnyRole("USER")
+        .antMatchers("/", "/home", "/about").permitAll()
+        .antMatchers("/posts/**").hasAnyAuthority("ADMIN", "EDITOR")
+        .antMatchers("/users/**").hasAnyAuthority("ADMIN")
         .anyRequest().authenticated()
     .and()
     .formLogin()
@@ -71,7 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         .permitAll()
         .and()
     .logout()
-        .logoutSuccessUrl(Constants.URL_USER_LOGIN)
+        .logoutSuccessUrl("/")
         .logoutUrl(Constants.URL_USER_LOGOUT)
         .permitAll()
         .and()
@@ -82,6 +82,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
   public void configure(WebSecurity web) throws Exception {
       web
               .ignoring()
-              .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+              .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/img/**");
   }
 }

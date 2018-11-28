@@ -12,7 +12,7 @@ public interface UserService {
 
   Optional<User> findById(Long id);
 
-  User create(User user);
+  User create(User user, List<String> role);
 
   User edit(User user);
 

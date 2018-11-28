@@ -1,12 +1,18 @@
 package com.exercise.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +30,7 @@ import com.exercise.services.UserService;
 import com.exercise.util.Constants;
 import com.exercise.util.DateHelper;
 import com.exercise.util.ImageHelper;
+import com.exercise.util.StringConstant;
 
 @Controller
 public class PostsController {
@@ -100,7 +107,8 @@ public class PostsController {
       notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
       return Constants.URL_POST_CREATE;
     }
-    User user = userService.findById(1L).get();
+    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User user = userService.findByUsername(auth.getName());
     post.setAuthor(user);
     if (!file.isEmpty()) {
       try {
@@ -125,7 +133,17 @@ public class PostsController {
     PostRequest request = new PostRequest();
     request.setStatus(Constants.POST_STATUS_PUBLISHED);
     request.setPublishDate(new Date());
-    List<Post> postList = postService.findAll();
+    List<Post> postList = new ArrayList<Post>();
+    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null) {
+      Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+      if (authorities.contains(new SimpleGrantedAuthority(StringConstant.EDITOR.value()))) {
+        final User user = userService.findByUsername(auth.getName());
+        postList = postService.findByAuthor(user);
+      } else if (authorities.contains(new SimpleGrantedAuthority(StringConstant.ADMIN.value()))) {
+        postList = postService.findAll();
+      }
+    }
     // List<Post> postList = postService.findAllToPublish(request);
     model.addAttribute("posts", postList);
     return Constants.RESOURCE_POST_LIST;

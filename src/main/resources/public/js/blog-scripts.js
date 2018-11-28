@@ -9,6 +9,7 @@ $(function() {
 //    	e.preventDefault();
     	$(this).attr("href", link+"/"+date);
     });
+    $('div#froala-editor').froalaEditor();
     setTimeout(function() {
         $('#messages li.info').fadeOut();
     }, 3000);
