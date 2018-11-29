@@ -34,6 +34,7 @@ public class NotificationServiceImpl implements NotificationService {
     if (notifyMessages == null) {
       notifyMessages = new ArrayList<NotificationMessage>();
     }
+    notifyMessages.clear();
     notifyMessages.add(new NotificationMessage(type, msg));
     httpSession.setAttribute(NOTIFY_MSG_SESSION_KEY, notifyMessages);
   }

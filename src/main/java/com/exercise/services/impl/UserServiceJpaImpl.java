@@ -30,7 +30,7 @@ public class UserServiceJpaImpl implements UserService {
   @Autowired
   private RoleRepository roleRepository;
 
-  public PasswordEncoder passwordEncoder() {
+  private PasswordEncoder passwordEncoder() {
     PasswordEncoder encoder = new BCryptPasswordEncoder();
     return encoder;
   }

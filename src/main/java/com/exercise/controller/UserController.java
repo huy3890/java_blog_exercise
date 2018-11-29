@@ -36,22 +36,6 @@ public class UserController {
     return Constants.RESOURCE_USER_LOGIN;
   }
 
-  // @RequestMapping(value = Constants.URL_USER_LOGIN, method = RequestMethod.POST)
-  // public String loginPage(@Valid LoginForm loginForm, BindingResult bindingResult) {
-  // if (bindingResult.hasErrors()) {
-  // notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
-  // return Constants.RESOURCE_USER_LOGIN;
-  // }
-  //
-  // if (!userService.authenticate(loginForm.getUsername(), loginForm.getPassword())) {
-  // notifyService.addErrorMessage("Invalid login!");
-  // return Constants.RESOURCE_USER_LOGIN;
-  // }
-  //
-  // notifyService.addInfoMessage(Constants.SUCCESS_MESSAGE_LOGIN);
-  // return "redirect:/";
-  // }
-
   @RequestMapping(value = Constants.URL_USER_LOGOUT, method = RequestMethod.POST)
   public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -72,6 +56,11 @@ public class UserController {
       notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
       return Constants.RESOURCE_USER_ADD;
     }
+    final User userModel = userService.findByUsername(user.getUsername());
+    if (userModel != null) {
+      notifyService.addErrorMessage(Constants.USER_EXIST);
+      return Constants.RESOURCE_USER_ADD;
+    }
     userService.create(user, Arrays.asList(StringConstant.EDITOR.value()));
     return "redirect:" + Constants.URL_USER_LIST;
   }
@@ -83,6 +72,7 @@ public class UserController {
       notifyService.addErrorMessage(Constants.USER_NOT_FOUND + id);
       return "redirect:" + Constants.URL_USER_LIST;
     }
+    // userRoleService.deleteByUser(user);
     userService.deleteById(id);
     return "redirect:" + Constants.URL_USER_LIST;
   }

@@ -7,27 +7,11 @@
 
 <body>
 
-<!-- <header th:replace="layout :: site-header" /> -->
+<header th:replace="layout :: site-header" />
 
-<!-- <h1>Login in the Blog</h1> -->
-
-<!-- <form method="post" th:object="${loginForm}">
-  <div><label for="username">Username:</label></div>
-  <input id="username" type="text" name="username" th:value="*{username}" />
-  <span class="formError" th:if="${#fields.hasErrors('username')}"
-                                th:errors="*{username}">Invalid username</span>
-
-  <div><label for="password" th:value="*{password}">Password:</label></div>
-  <input id="password" type="password" name="password" th:value="*{password}" />
-  <span class="formError" th:if="${#fields.hasErrors('password')}"
-                                th:errors="*{password}">Invalid password</span>
-
-  <div><input type="submit" value="Login"/>
-  <a href="register.html" th:href="@{/users/register}">[Go to Register]</a></div>
-</form> -->
-<form th:action="@{/registration}" method="get">
+<!-- <form th:action="@{/}" method="get"> -->
     <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
-</form>
+<!-- </form> -->
 
 <div class="container">
     <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
@@ -48,6 +32,7 @@
     </form>
 </div>
 
+<div th:replace="layout :: site-space"></div>
 <footer th:replace="layout :: site-footer" />
 
 </body>

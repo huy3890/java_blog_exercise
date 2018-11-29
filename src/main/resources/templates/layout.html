@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="../public/css/bootstrap-datetimepicker.min.css" th:href="@{/css/bootstrap-datetimepicker.min.css}" />
 	<link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
 	<link rel="icon" href="../public/img/favicon.ico" th:href="@{/img/favicon.ico}" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 	<link rel="stylesheet" href="../public/css/froala_editor.min.css" th:href="@{/css/froala_editor.min.css}" />
 	<link rel="stylesheet" href="../public/css/froala_style.min.css" th:href="@{/css/froala_style.min.css}" />
 	<script src="../public/js/jquery-3.1.0.min.js" th:src="@{/js/jquery-3.1.0.min.js}"></script>
@@ -25,7 +26,6 @@
 	      <a href="index.html" th:href="@{/}"><img style="width:100%; height: 40px;"
 	                        src="../public/img/site-logo.png" th:src="@{/img/site-logo.png}" /></a>
 	      <a href="index.html" th:href="@{/}">Home</a>
-	      <!-- <a href="users/login.html" th:href="@{/users/login}">Login</a> -->
 	      <!-- <a href="users/register.html" th:href="@{/users/register}">Register</a> -->
 	      <a sec:authorize="isAnonymous()" th:href="@{/users/login}">Login</a>
 	      <span sec:authorize="isAuthenticated()">
@@ -41,24 +41,32 @@
 	      </span>
 	    </header>
 
-        <h1 th:text="${session.siteNotificationMessages}" th:unless="${session == null}">[...]</h1>
+        <!-- <h1 th:text="${session.siteNotificationMessages}" th:unless="${session == null}">[...]</h1> -->
         <ul id="messages" th:with="notifyMessages=${session.siteNotificationMessages}">
 	      <li th:each="msg : ${notifyMessages}" th:text="${msg.text}"
 	           th:class="${#strings.toLowerCase(msg.type)}">
 	      </li>
 	      <span th:if="${notifyMessages}" th:remove="all" th:text="${session.siteNotificationMessages}"></span>
     	</ul>
-	    <!-- <ul id="messages" th:with="notifyMessages=${session[T(blog.services
-	          .NotificationServiceImpl).NOTIFY_MSG_SESSION_KEY]}">
+	    <!-- <ul id="messages" th:with="notifyMessages=${session[com.exercise.services.impl.NotificationServiceImpl.NOTIFY_MSG_SESSION_KEY]}">
 	      <li th:each="msg : ${notifyMessages}" th:text="${msg.text}"
 	           th:class="${#strings.toLowerCase(msg.type)}">
 	      </li>
-	      <span th:if="${notifyMessages}" th:remove="all" th:text="${session.remove(
-	          T(blog.services.NotificationServiceImpl).NOTIFY_MSG_SESSION_KEY)}"></span>
+	      <span th:if="${notifyMessages}" th:remove="all" th:text="${session.remove(com.exercise.services.impl.NotificationServiceImpl.NOTIFY_MSG_SESSION_KEY)}"></span>
     	</ul> -->
+    	<div id="confirm" class="modal hide fade">
+		  <div class="modal-body">
+		    Are you sure?
+		  </div>
+		  <div class="modal-footer">
+		    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+		    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+		  </div>
+		</div>
 	</header>
 	<h1>Welcome</h1>
 	<p>Welcome to the Spring MVC Blog.</p> 
+	<div style="min-height: 100px" th:fragment="site-space"></div>
     <footer th:fragment="site-footer">
 	&copy; CONVERTIUM, 2018
 	</footer>

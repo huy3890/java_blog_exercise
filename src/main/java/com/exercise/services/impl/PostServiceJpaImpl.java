@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 import com.exercise.model.Post;
 import com.exercise.model.User;
 import com.exercise.repository.PostRepository;
@@ -44,6 +45,15 @@ public class PostServiceJpaImpl implements PostService {
 
   @Override
   public Post edit(Post post) {
+    if (post == null) {
+      return null;
+    }
+    Post postModel = this.postRepository.findById(post.getId()).get();
+    if (postModel != null) {
+      if (StringUtils.isEmpty(post.getBannerImage())) {
+        post.setBannerImage(postModel.getBannerImage());
+      }
+    }
     return this.postRepository.save(post);
   }
 

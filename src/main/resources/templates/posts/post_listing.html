@@ -20,21 +20,22 @@
 			<td>Author</td>
 			<td>Status</td>
 			<td></td>
-			<td></td>
+			<!-- <td></td> -->
 		</tr>
 		<tr th:each="post : ${posts}">
 			<td th:text="${post.id}"></td>
 			<td th:text="${post.title}"></td>
-			<td th:text="${post.body}"></td>
+			<td th:utext="${post.body}"></td>
 			<td><img style="width:100%; height: 80px;" class="img-responsive" th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></td>
 			<td th:text="${post.author.username}"></td>
 			<td th:text="${post.status}"></td>
 			<td><a th:href="@{'/posts/view/' + ${post.id}}">Preview</a></td>
-			<td><a th:href="@{'/users/delete/' + ${post.id}}">Push</a></td>
+			<!-- <td><a th:href="@{'/post/delete/' + ${post.id}}">Delete</a></td> -->
 		</tr>
 	</table>
 </div>
 
+<div th:replace="layout :: site-space"></div>
 <footer th:replace="layout :: site-footer" />
 
 </body>

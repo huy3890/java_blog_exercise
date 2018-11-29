@@ -47,8 +47,9 @@ public class User {
   @OneToMany(mappedBy = "author")
   private Set<Post> posts = new HashSet<Post>();
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JoinTable(name = "user_role", schema = "`java_blog_exercise`", joinColumns = @JoinColumn(name = "user_id"),
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH}, fetch = FetchType.EAGER)
+  @JoinTable(name = "user_role", schema = "`java_blog_exercise`",
+      joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles;
 

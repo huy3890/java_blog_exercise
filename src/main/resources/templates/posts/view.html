@@ -18,12 +18,13 @@
         </div>
         <div align="right" class='col-sm-6'>
           <h1>
-		      <a th:if="${post.status != 'Ready to publish'}" th:href="@{'/posts/get_approval/' + ${post.id}}">Get Approval &nbsp;</a>
+              <a th:if="${post.status != 'Ready to publish'}" th:href="@{'/posts/post_edit/' + ${post.id}}">Edit &nbsp;</a>
+		      <a th:if="${post.status != 'Ready to publish' && post.status != 'Published'}" th:href="@{'/posts/get_approval/' + ${post.id}}">Get Approval &nbsp;</a>
 		      <a sec:authorize="hasAuthority('ADMIN')" th:if="${post.status != 'Reject'}" th:href="@{'/posts/reject/' + ${post.id}}">Reject &nbsp;</a>
-		      <a sec:authorize="hasAuthority('ADMIN')" id="publishPostLink" th:if="${post.status != 'Published'}" th:href="@{'/posts/publish/' + ${post.id}}">Publish &nbsp;</a>
+		      <a sec:authorize="hasAuthority('ADMIN')" id="publishPostLink" th:if="${post.status != 'Published' && post.status != 'Reject'}" th:href="@{'/posts/publish/' + ${post.id}}">Publish &nbsp;</a>
 		      <a th:href="@{/posts/get_post_listing}">Back</a>
 	      </h1>
-	      <div sec:authorize="hasAuthority('ADMIN')" class="form-group">
+	      <div sec:authorize="hasAuthority('ADMIN')" th:if="${post.status != 'Published' && post.status != 'Reject'}" class="form-group">
               <div class='input-group date' id='datetimepicker1'>
                   <input type='text' class="form-control" />
                   <span class="input-group-addon">
@@ -56,7 +57,7 @@
     </div>
   </div>
 </div>
-
+<div th:replace="layout :: site-space"></div>
 <footer th:replace="layout :: site-footer" />
 
 </body>

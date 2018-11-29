@@ -14,16 +14,16 @@
     <div class='col-sm-12'>
       <div class="row">
         <div class='col-sm-8'>
-          <h1><strong>CREATE A POST</strong></h1>
+          <h1><strong>EDIT POST</strong></h1>
         </div>
         <div class='col-sm-4'>
-          <h1 align="right"><a th:href="@{/posts/get_post_listing}">Back &nbsp;</a>
+          <h1 align="right"><a th:href="@{'/posts/view/' + ${post.id}}">Back &nbsp;</a>
 	      </h1>
         </div>
       </div>
     </div>
     <div class='col-sm-12'>
-      <form th:action="@{/posts/post_create}" method="post" enctype="multipart/form-data" th:object="${post}">
+      <form th:action="@{'/posts/post_edit/' + ${post.id}}" method="post" enctype="multipart/form-data" th:object="${post}">
         <div><label for="title">Title:</label></div>
           <input id="title" class="form-control" type="text" name="title" th:value="*{title}" />
             <span class="alert alert-danger formError" th:if="${#fields.hasErrors('title')}"
@@ -31,6 +31,7 @@
 
         <!-- <div><label for="bannerImage" th:value="*{bannerImage}">Image Banner:</label></div>
           <input id="bannerImage" type="file" name="file" /> -->
+        <div><img style="width:100%; max-width:900px;" th:src="${post.bannerImage} == null ? _ : @{'data:image/png;base64,'+${post.bannerImage}}"></div>
         <div>
         	<label class="btn btn-default">
     			Image Banner: <input id="bannerImage" type="file" name="file" hidden>
@@ -41,10 +42,10 @@
         <div><label for="body" th:value="*{body}">Body</label></div>
         <input style="display: none" id="richtext" class="form-control" type="text" name="body" th:value="*{body}" />
         <div id="froala-editor">
-  			<p id="input-froala-editor"></p>
+  			<p id="input-froala-editor" th:utext="*{body}"></p>
 		</div>
 
-        <div style="margin-top: 40px"><input id="createPost" class="btn btn-lg btn-primary btn-block" type="submit" value="Create"/></div>
+        <div style="margin-top: 40px"><input id="createPost" class="btn btn-lg btn-primary btn-block" type="submit" value="Update"/></div>
       </form>
     </div>
   </div>

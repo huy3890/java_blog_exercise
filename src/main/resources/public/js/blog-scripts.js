@@ -1,4 +1,7 @@
 $(function() {
+	setTimeout(function(){ 
+		$('#messages li').fadeOut();
+	}, 3000);
     $('#messages li').click(function() {
         $(this).fadeOut();
     });
@@ -9,8 +12,22 @@ $(function() {
 //    	e.preventDefault();
     	$(this).attr("href", link+"/"+date);
     });
+    $("#deleteUser").on("click", function(e) {
+    	e.preventDefault();
+    	$('#confirm').modal({
+    	      backdrop: 'static',
+    	      keyboard: false
+    	    })
+    	    .one('click', '#delete', function(e) {
+//    	      $form.trigger('submit');
+    	    });
+    });
+    $("#createPost").on("click", function(e) {
+    	var value = $('#input-froala-editor').html();
+    	$('#richtext').val(value);
+    });
     $('div#froala-editor').froalaEditor();
-    setTimeout(function() {
-        $('#messages li.info').fadeOut();
-    }, 3000);
+//    setTimeout(function() {
+//        $('#messages li.info').fadeOut();
+//    }, 3000);
 });

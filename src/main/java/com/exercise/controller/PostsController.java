@@ -3,7 +3,6 @@ package com.exercise.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.exercise.model.Post;
 import com.exercise.model.User;
-import com.exercise.req.PostRequest;
 import com.exercise.services.NotificationService;
 import com.exercise.services.PostService;
 import com.exercise.services.UserService;
@@ -108,7 +106,7 @@ public class PostsController {
       return Constants.URL_POST_CREATE;
     }
     final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    User user = userService.findByUsername(auth.getName());
+    final User user = userService.findByUsername(auth.getName());
     post.setAuthor(user);
     if (!file.isEmpty()) {
       try {
@@ -124,15 +122,51 @@ public class PostsController {
       }
     }
     post.setStatus(Constants.POST_STATUS_DRAFT);
-    postService.create(post);
-    return "redirect:" + Constants.URL_POST_LIST;
+    final Post returnData = postService.create(post);
+    return "redirect:" + Constants.URL_POST_VIEW_NO_ID + returnData.getId();
+  }
+
+  @RequestMapping(Constants.URL_POST_EDIT)
+  public String redirectEditPost(@PathVariable("id") Long id, Model model) {
+    Post post = postService.findById(id).get();
+    if (post == null) {
+      notifyService.addErrorMessage(Constants.POST_NOT_FOUND + id);
+      return "redirect:" + Constants.URL_POST_LIST;
+    }
+    model.addAttribute("post", post);
+    return Constants.RESOURCE_POST_EDIT;
+  }
+
+  @RequestMapping(value = Constants.URL_POST_EDIT, method = RequestMethod.POST)
+  public String editPost(@RequestParam("file") MultipartFile file, @Valid Post post,
+      BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      notifyService.addErrorMessage(Constants.ERROR_MESSAGE_LOGIN);
+      return Constants.URL_POST_EDIT;
+    }
+    final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User user = userService.findByUsername(auth.getName());
+    post.setAuthor(user);
+    if (!file.isEmpty()) {
+      try {
+        byte[] bytes = file.getBytes();
+        if (!ImageHelper.verifyImage(bytes)) {
+          notifyService.addErrorMessage(Constants.IMAGE_ERROR_MESSAGE);
+          return Constants.URL_POST_EDIT;
+        }
+        // post.setBannerImage(Base64.getEncoder().encode(bytes));
+        post.setBannerImage(org.apache.tomcat.util.codec.binary.Base64.encodeBase64String(bytes));
+      } catch (IOException e) {
+        logger.info("Cannot read file: {}", PostsController.class.toString());
+      }
+    }
+    post.setStatus(Constants.POST_STATUS_DRAFT);
+    final Post returnData = postService.edit(post);
+    return "redirect:" + Constants.URL_POST_VIEW_NO_ID + returnData.getId();
   }
 
   @RequestMapping(value = Constants.URL_POST_LIST)
   public String getListEditor(Model model) {
-    PostRequest request = new PostRequest();
-    request.setStatus(Constants.POST_STATUS_PUBLISHED);
-    request.setPublishDate(new Date());
     List<Post> postList = new ArrayList<Post>();
     final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null) {

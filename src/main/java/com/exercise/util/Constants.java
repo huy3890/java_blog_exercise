@@ -20,11 +20,15 @@ public class Constants {
   public static final String RESOURCE_USER_LIST = "users/editor_listing";
   public static final String RESOURCE_USER_EDIT = "users/edit_editor";
   public static final String USER_NOT_FOUND = "Editor not found #";
+  public static final String USER_EXIST = "User exist, please check again!";
+
+  public static final String POST_NOT_FOUND = "Post not found #";
 
   public static final String URL_POST_CREATE = "/posts/post_create";
   public static final String URL_POST_LIST = "/posts/get_post_listing";
-  public static final String URL_POST_EDIT = "/posts/post_edit";
+  public static final String URL_POST_EDIT = "/posts/post_edit/{id}";
   public static final String URL_POST_VIEW = "/posts/view/{id}";
+  public static final String URL_POST_VIEW_NO_ID = "/posts/view/";
   public static final String URL_POST_GET_ARPPOVAL = "/posts/get_approval/{id}";
   public static final String URL_POST_REJECT = "/posts/reject/{id}";
   public static final String URL_POST_PUSHLISH = "/posts/publish/{id}/{publishDate}";

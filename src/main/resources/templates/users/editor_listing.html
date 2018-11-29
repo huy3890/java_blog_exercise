@@ -37,13 +37,14 @@
 					<td th:text="${user.password}"></td>
 					<td th:text="${user.fullName}"></td>
 					<td><a th:href="@{'/users/edit/' + ${user.id}}">edit</a></td>
-					<td><a th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
+					<td><a id="deleteUser" th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
 				</tr>
 			</table>
 		</div>
 	</div>
 </div>
 
+<div th:replace="layout :: site-space"></div>
 <footer th:replace="layout :: site-footer" />
 
 </body>
