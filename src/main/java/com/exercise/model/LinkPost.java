@@ -12,17 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "link_post", schema = "`java_blog_exercise`")
 public class LinkPost {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "link_post_id_seq")
-  @SequenceGenerator(name = "link_post_id_seq", sequenceName = "link_post_id_seq",
-      allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+  @GenericGenerator(name = "native", strategy = "native")
   private Long id;
 
   @OneToOne(optional = false, fetch = FetchType.LAZY)

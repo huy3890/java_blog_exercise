@@ -10,18 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "public_post", schema = "`java_blog_exercise`")
 public class PublicPost {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "public_post_id_seq")
-  @SequenceGenerator(name = "public_post_id_seq", sequenceName = "public_post_id_seq",
-      allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+  @GenericGenerator(name = "native", strategy = "native")
   private Long id;
 
   @Size(min = 1, max = 255, message = "Title size should be in the range [1...255]")

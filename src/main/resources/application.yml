@@ -18,7 +18,7 @@ spring:
   application:
     name: java_blog_exercise
   profiles:
-    active: local
+    active: mysql
   thymeleaf:
     cache: false
   flyway:
@@ -93,7 +93,40 @@ logging:
   level:
     root: ERROR
     org.springframework: INFO
-    com.mitsubishimotors.mason.microservice: DEBUG
+    com.exercise: DEBUG
+ 
+---
+
+spring:
+  profiles: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_blog_exercise
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+  flyway:
+    locations:
+    - classpath:db/migration/local
+logging:
+  level:
+    root: ERROR
+    org.springframework: INFO
+    com.exercise: DEBUG
  
 ---
 
@@ -135,6 +168,6 @@ logging:
   level:
     root: INFO
     org.springframework: ERROR
-    com.mitsubishimotors.mason.microservice: INFO
+    com.exercise: INFO
 
      
