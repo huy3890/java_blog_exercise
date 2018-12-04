@@ -11,7 +11,7 @@
 **1. Clone the application**
 
 ```bash
-git clone https://github.com/huy3890/convertium.git
+git clone https://github.com/huy3890/java_blog_exercise.git
 ```
 
 **2. Change the configuration in application.yml to match with DB**
@@ -20,10 +20,10 @@ git clone https://github.com/huy3890/convertium.git
 **3. Build and run the app using maven**
 
 ```bash
-cd convertium-assignment
+cd java_blog_exercise
 mvn spring-boot:run
 ```
-### Technologies:
+## Technologies:
 
 **Flyway**
 I am using Flyway for database migration. Create SQL script also,
