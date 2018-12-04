@@ -8,6 +8,11 @@ $(function() {
     $('#datetimepicker1').datetimepicker();
     $("#publishPostLink").on("click", function(e) {
     	var link = $(this).attr('href');
+    	var dateValue = $('#datetimepicker1').find("input").val();
+    	if(!dateValue){
+    		e.preventDefault();
+    		alert("Please choose a date time to publish this post!");
+    	}
     	var date = $('#datetimepicker1').data("DateTimePicker").date().unix();
 //    	e.preventDefault();
     	$(this).attr("href", link+"/"+date);
