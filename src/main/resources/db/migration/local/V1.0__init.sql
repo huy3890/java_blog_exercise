@@ -4,6 +4,7 @@
 -- Convertium Assignment Schema Starts Here
 
 -- CREATE SCHEMA IF NOT EXISTS "java_blog_exercise";
+-- DROP DATABASE IF EXISTS `java_blog_exercise`;
 
 -- SET search_path TO "java_blog_exercise";
 
@@ -37,7 +38,7 @@ CREATE TABLE POST (
   user_id int4 NOT NULL,
   title varchar(255) NOT NULL,
   image LONGBLOB,
-  body varchar(255) NOT NULL,
+  body LONGBLOB NOT NULL,
   status varchar(255),
   last_modified TIMESTAMP default NOW() NOT NULL,
   publish_date TIMESTAMP default NOW() NOT NULL,
@@ -48,7 +49,7 @@ CREATE TABLE PUBLIC_POST (
   id serial NOT NULL,
   title varchar(255) NOT NULL,
   image LONGBLOB,
-  body varchar(255) NOT NULL,
+  body LONGBLOB NOT NULL,
   author varchar(255),
   last_modified TIMESTAMP NOT NULL,
   CONSTRAINT PUBLIC_POST_pk PRIMARY KEY (id)

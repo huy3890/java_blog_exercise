@@ -3,19 +3,71 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="site-head">
-    <meta charset="UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
     <link rel="stylesheet" href="../public/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 	<link rel="stylesheet" href="../public/css/bootstrap-datetimepicker.min.css" th:href="@{/css/bootstrap-datetimepicker.min.css}" />
 	<link rel="stylesheet" href="../public/css/styles.css" th:href="@{/css/styles.css}" />
 	<link rel="icon" href="../public/img/favicon.ico" th:href="@{/img/favicon.ico}" />
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../public/css/froala_editor.min.css" th:href="@{/css/froala_editor.min.css}" />
 	<link rel="stylesheet" href="../public/css/froala_style.min.css" th:href="@{/css/froala_style.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/colors.css" th:href="@{/css/plugins/colors.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/char_counter.min.css" th:href="@{/css/plugins/char_counter.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/code_view.min.css" th:href="@{/css/plugins/code_view.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/draggable.min.css" th:href="@{/css/plugins/draggable.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/emoticons.min.css" th:href="@{/css/plugins/emoticons.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/file.min.css" th:href="@{/css/plugins/file.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/fullscreen.min.css" th:href="@{/css/plugins/fullscreen.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/help.min.css" th:href="@{/css/plugins/help.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/image_manager.min.css" th:href="@{/css/plugins/image_manager.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/image.min.css" th:href="@{/css/plugins/image.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/line_breaker.min.css" th:href="@{/css/plugins/line_breaker.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/quick_insert.min.css" th:href="@{/css/plugins/quick_insert.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/special_characters.min.css" th:href="@{/css/plugins/special_characters.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/table.min.css" th:href="@{/css/plugins/table.min.css}" />
+	<link rel="stylesheet" href="../public/css/plugins/video.min.css" th:href="@{/css/plugins/video.min.css}" />
+	<!-- <link rel="stylesheet" href="../public/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}"/> -->
+	<!-- <link rel="stylesheet" href="../public/css/froala_editor.pkgd.min.css" th:href="@{/css/froala_editor.pkgd.min.css}"/> -->
+	<!-- <link rel="stylesheet" href="../public/css/froala_style.min.css" th:href="@{/css/froala_style.min.css}" /> -->
 	<script src="../public/js/jquery-3.1.0.min.js" th:src="@{/js/jquery-3.1.0.min.js}"></script>
 	<script src="../public/js/moment.js" th:src="@{/js/moment.js}"></script>
 	<script src="../public/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 	<script src="../public/js/bootstrap-datetimepicker.min.js" th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
 	<script src="../public/js/froala_editor.min.js" th:src="@{/js/froala_editor.min.js}"></script>
+	<script src="../public/js/plugins/colors.min.js" th:src="@{/js/plugins/colors.min.js}"></script>
+	<script src="../public/js/plugins/char_counter.min.js" th:src="@{/js/plugins/char_counter.min.js}"></script>
+	<script src="../public/js/plugins/code_beautifier.min.js" th:src="@{/js/plugins/code_beautifier.min.js}"></script>
+	<script src="../public/js/plugins/code_view.min.js" th:src="@{/js/plugins/code_view.min.js}"></script>
+	<script src="../public/js/plugins/draggable.min.js" th:src="@{/js/plugins/draggable.min.js}"></script>
+	<script src="../public/js/plugins/emoticons.min.js" th:src="@{/js/plugins/emoticons.min.js}"></script>
+	<script src="../public/js/plugins/entities.min.js" th:src="@{/js/plugins/entities.min.js}"></script>
+	<script src="../public/js/plugins/file.min.js" th:src="@{/js/plugins/file.min.js}"></script>
+	<script src="../public/js/plugins/font_family.min.js" th:src="@{/js/plugins/font_family.min.js}"></script>
+	<script src="../public/js/plugins/font_size.min.js" th:src="@{/js/plugins/font_size.min.js}"></script>
+	<script src="../public/js/plugins/forms.min.js" th:src="@{/js/plugins/forms.min.js}"></script>
+	<script src="../public/js/plugins/fullscreen.min.js" th:src="@{/js/plugins/fullscreen.min.js}"></script>
+	<script src="../public/js/plugins/help.min.js" th:src="@{/js/plugins/help.min.js}"></script>
+	<script src="../public/js/plugins/image_manager.min.js" th:src="@{/js/plugins/image_manager.min.js}"></script>
+	<script src="../public/js/plugins/image.min.js" th:src="@{/js/plugins/image.min.js}"></script>
+	<script src="../public/js/plugins/inline_class.min.js" th:src="@{/js/plugins/inline_class.min.js}"></script>
+	<script src="../public/js/plugins/inline_style.min.js" th:src="@{/js/plugins/inline_style.min.js}"></script>
+	<script src="../public/js/plugins/line_breaker.min.js" th:src="@{/js/plugins/line_breaker.min.js}"></script>
+	<script src="../public/js/plugins/line_height.min.js" th:src="@{/js/plugins/line_height.min.js}"></script>
+	<script src="../public/js/plugins/link.min.js" th:src="@{/js/plugins/link.min.js}"></script>
+	<script src="../public/js/plugins/lists.min.js" th:src="@{/js/plugins/lists.min.js}"></script>
+	<script src="../public/js/plugins/paragraph_format.min.js" th:src="@{/js/plugins/paragraph_format.min.js}"></script>
+	<script src="../public/js/plugins/paragraph_style.min.js" th:src="@{/js/plugins/paragraph_style.min.js}"></script>
+	<script src="../public/js/plugins/print.min.js" th:src="@{/js/plugins/print.min.js}"></script>
+	<script src="../public/js/plugins/quick_insert.min.js" th:src="@{/js/plugins/quick_insert.min.js}"></script>
+	<script src="../public/js/plugins/quote.min.js" th:src="@{/js/plugins/quote.min.js}"></script>
+	<script src="../public/js/plugins/save.min.js" th:src="@{/js/plugins/save.min.js}"></script>
+	<script src="../public/js/plugins/special_characters.min.js" th:src="@{/js/plugins/special_characters.min.js}"></script>
+	<script src="../public/js/plugins/table.min.js" th:src="@{/js/plugins/table.min.js}"></script>
+	<script src="../public/js/plugins/url.min.js" th:src="@{/js/plugins/url.min.js}"></script>
+	<script src="../public/js/plugins/video.min.js" th:src="@{/js/plugins/video.min.js}"></script>
+	<script src="../public/js/plugins/word_paste.min.js" th:src="@{/js/plugins/word_paste.min.js}"></script>
 	<script src="../public/js/blog-scripts.js" th:src="@{/js/blog-scripts.js}"></script>
     <title>Blog</title>
 </head>
